@@ -101,7 +101,7 @@ export class UsersService {
   async login(email: string, password: string, res: Response) {
     const user = await this.usersRepository.findOne({
       where: { email },
-      select: ['id', 'name', 'email', 'password', 'isVerified'],
+      select: ['id', 'name', 'email', 'role', 'password', 'isVerified'],
     });
     if (!user) throw new BadRequestException('User not found');
     if (!user.isVerified) throw new BadRequestException('Verify email first');
@@ -112,6 +112,7 @@ export class UsersService {
     const { accessToken, refreshToken } = await this.jwtService.generateTokens({
       id: user.id,
       email: user.email,
+      role: user.role,
     });
 
     // Set cookies here
@@ -129,8 +130,8 @@ export class UsersService {
     });
 
     return {
-      message: 'Login successful',
-      user: { email: user.email, name: user.name },
+      message: 'Login successfully',
+      user: { email: user.email, name: user.name, role: user.role },
     };
   }
 

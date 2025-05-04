@@ -12,6 +12,6 @@ config();
     }),
   ],
   providers: [AuthJwtService],
-  exports: [AuthJwtService],
+  exports: [AuthJwtService, JwtModule],
 })
 export class CustomJwtModule {}

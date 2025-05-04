@@ -7,15 +7,17 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 //import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { Response } from 'express';
-import { Res, Req ,BadRequestException} from '@nestjs/common';
+import { Res, Req } from '@nestjs/common';
 import { Request } from 'express';
-import { UserType } from './types/userTypes';
+
 
 
 @Controller('users')
@@ -50,13 +52,13 @@ export class UsersController {
     return this.usersService.logout(res);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('update-password')
   async updatePassword(
     @Body() body: {oldPassword: string; newPassword: string },
     @Req() req: Request
   ) {
-    const { id: userId } = req.user as UserType;
-   // const userId = 14;
+    const { id: userId } = req.user as UserEntity;
 
     return await this.usersService.updatePassword(userId, body.oldPassword, body.newPassword);
   }
