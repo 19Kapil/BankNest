@@ -1,11 +1,9 @@
 import {
     IsString,
     IsDate,
-    IsBoolean,
     IsNotEmpty,
-    IsOptional,
     IsMobilePhone,
-    IsNumber,
+  
   } from 'class-validator';
   import { Type } from 'class-transformer';
   

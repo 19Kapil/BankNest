@@ -66,7 +66,7 @@ export class UserKycController {
   async getAllKYC(@Req() req: Request): Promise<UserKYCEntity[]> {
     const { id: userId, role } = req.user as UserEntity;
     console.log(role);
-    return this.userKycService.getAllKyc(); // Call service to get all KYC records
+    return this.userKycService.getAllKyc(); 
   }
 
 
